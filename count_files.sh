@@ -28,7 +28,7 @@ echo ""
 EXTENSION="$2"
 
 if [ -n "$EXTENSION" ]; then
-    ext_files=$(find "$TARGET_DIR" -maxdepth 1 -type f -name "*.$EXTENSION" | wc -l)
+    ext_files=$(find "$TARGET_DIR" -maxdepth 1 -type f -name "*.$EXTENSION" 2>/dev/null | wc -l) #додано 2>/dev/null для 3 лаби
     echo "Файлів з розширенням .$EXTENSION: $ext_files"
 fi
 
