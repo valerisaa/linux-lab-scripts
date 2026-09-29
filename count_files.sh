@@ -45,3 +45,4 @@ while read file; do
 done < <(find "$TARGET_DIR" -type f 2>/dev/null)
 
 echo "Загальний розмір знайдених файлів: $total_size байт"
+echo "Підрахунок завершено." #додано зміни скрипта для 3 лаби
