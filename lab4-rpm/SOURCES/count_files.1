@@ -1,0 +1,36 @@
+.TH COUNT_FILES 1 "October 2026" "count-files 2.0" "User Commands"
+.SH NAME
+count_files \- count files in a directory
+.SH SYNOPSIS
+.B count_files
+[\fIOPTIONS\fR]
+.SH DESCRIPTION
+count_files is a Bash script that counts files, directories,
+and symbolic links in a specified directory.Version 2.0 also displays the largest file in the selected directory
+
+.SH OPTIONS
+.TP
+.B \-r
+Search through subdirectories recursively.
+
+.TP
+.B \-e EXTENSION
+Count files with the specified extension.
+
+.SH EXAMPLES
+Count files in the default /etc directory:
+.PP
+count_files
+
+.PP
+Count files recursively:
+.PP
+count_files \-r
+
+.PP
+Count .conf files:
+.PP
+count_files \-e conf
+
+.SH AUTHOR
+Valeriia Temchur
