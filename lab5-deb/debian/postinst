@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+echo "count-files package installed successfully."
+echo "To count files, run: count_files"
+echo "Configuration: /etc/count-files.conf"
+
+exit 0

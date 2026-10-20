@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+
+echo "Preparing to remove count-files package..."
+
+exit 0
