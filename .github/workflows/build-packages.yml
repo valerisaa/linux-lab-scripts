@@ -9,6 +9,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  test-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check Bash syntax
+        run: bash -n count_files.sh
+
+      - name: Test script execution
+        run: |
+          bash count_files.sh /etc
   build-rpm:
     runs-on: ubuntu-latest
     container: fedora:latest
