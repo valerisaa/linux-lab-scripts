@@ -59,11 +59,14 @@ jobs:
           if-no-files-found: error
 
   build-deb:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
 
     steps:
       - uses: actions/checkout@v5
-
       - name: Install build tools
         run: |
           sudo apt-get update
@@ -82,7 +85,7 @@ jobs:
       - name: Upload DEB artifact
         uses: actions/upload-artifact@v5
         with:
-          name: deb-package
+          name: deb-package-${{ matrix.os }}
           path: build/*.deb
           if-no-files-found: error
 
@@ -104,7 +107,7 @@ jobs:
       - name: Download DEB artifact
         uses: actions/download-artifact@v5
         with:
-          name: deb-package
+          name: deb-package-ubuntu-24.04
           path: release
 
       - name: Create GitHub Release
