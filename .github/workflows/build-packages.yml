@@ -27,11 +27,14 @@ jobs:
           bash count_files.sh /etc
   build-rpm:
     runs-on: ubuntu-latest
-    container: fedora:latest
+    container: fedora:${{ matrix.version }}
+
+    strategy:
+      matrix:
+        version: [44, 45]
 
     steps:
       - uses: actions/checkout@v5
-
       - name: Install build tools
         run: |
           dnf install -y rpm-build rpmdevtools tar gzip zstd
@@ -54,7 +57,7 @@ jobs:
       - name: Upload RPM artifact
         uses: actions/upload-artifact@v5
         with:
-          name: rpm-package
+          name: rpm-package-${{ matrix.version }}
           path: ~/rpmbuild/RPMS/noarch/*.rpm
           if-no-files-found: error
 
@@ -101,7 +104,7 @@ jobs:
       - name: Download RPM artifact
         uses: actions/download-artifact@v5
         with:
-          name: rpm-package
+          name: rpm-package-fedora-45
           path: release
 
       - name: Download DEB artifact
