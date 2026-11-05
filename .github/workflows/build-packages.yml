@@ -14,43 +14,42 @@ jobs:
     container: fedora:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install build tools
         run: |
-          dnf install -y rpm-build rpmdevtools tar gzip
+          dnf install -y rpm-build rpmdevtools tar gzip zstd
 
       - name: Setup RPM build environment
         run: rpmdev-setuptree
 
       - name: Prepare sources
         run: |
-          cp lab4-rpm/SOURCES/count-files-2.0.tar.gz /root/rpmbuild/SOURCES/
-          cp lab4-rpm/SOURCES/count_files.1 /root/rpmbuild/SOURCES/
-          cp lab4-rpm/SOURCES/count-files.conf /root/rpmbuild/SOURCES/
+          cp lab4-rpm/SOURCES/count-files-2.0.tar.gz ~/rpmbuild/SOURCES/
+          cp lab4-rpm/SOURCES/count_files.1 ~/rpmbuild/SOURCES/
+          cp lab4-rpm/SOURCES/count-files.conf ~/rpmbuild/SOURCES/
 
       - name: Copy spec file
-        run: cp lab4-rpm/SPECS/count-files.spec /root/rpmbuild/SPECS/
+        run: cp lab4-rpm/SPECS/count-files.spec ~/rpmbuild/SPECS/
 
       - name: Build RPM
-        run: rpmbuild -ba /root/rpmbuild/SPECS/count-files.spec
+        run: rpmbuild -ba ~/rpmbuild/SPECS/count-files.spec
 
       - name: Upload RPM artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: rpm-package
-          path: /root/rpmbuild/RPMS/noarch/*.rpm
+          path: ~/rpmbuild/RPMS/noarch/*.rpm
           if-no-files-found: error
 
   build-deb:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install build tools
         run: |
-          dnf install -y rpm-build rpmdevtools tar gzip zstd
           sudo apt-get update
           sudo apt-get install -y build-essential debhelper devscripts
 
@@ -65,7 +64,7 @@ jobs:
           dpkg-buildpackage -us -uc -b
 
       - name: Upload DEB artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: deb-package
           path: build/*.deb
