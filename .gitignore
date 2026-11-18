@@ -13,3 +13,5 @@
 # Build directories
 build/
 dist/
+/lab7/.env
+/lab7/ssl/
