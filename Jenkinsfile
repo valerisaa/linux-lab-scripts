@@ -91,7 +91,7 @@ pipeline {
             steps {
                 unstash 'rpm-package'
                 sh '''
-                    rpm -ivh count-files-2.0-1.noarch.rpm
+                    rpm -ivh --nosignature count-files-2.0-1.noarch.rpm
                     count_files
                     rpm -e count-files
                 '''
