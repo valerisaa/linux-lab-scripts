@@ -80,6 +80,40 @@ pipeline {
                 stash name: 'deb-package', includes: '*.deb'
             }
         }
+        stage('Test RPM Installation') {
+            agent {
+                docker {
+                    image 'fedora:latest'
+                    label 'built-in'
+                    args '-u root'
+                }
+            }
+            steps {
+                unstash 'rpm-package'
+                sh '''
+                    rpm -ivh count-files-2.0-1.noarch.rpm
+                    count_files
+                    rpm -e count-files
+                '''
+            }
+        }
+        stage('Test DEB Installation') {
+            agent {
+                docker {
+                    image 'ubuntu:latest'
+                    label 'built-in'
+                    args '-u root'
+                }
+            }
+            steps {
+                unstash 'deb-package'
+                sh '''
+                    dpkg -i count-files_1.0-1_all.deb
+                    count_files
+                    dpkg -r count-files
+                '''
+            }
+        }
 
         stage('Archive Packages') {
             agent {
