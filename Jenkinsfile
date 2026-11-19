@@ -37,7 +37,11 @@ pipeline {
             steps {
                 unstash 'source'
                 sh '''
-                    mkdir -p "$WORKSPACE/.rpmbuild"/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+                    mkdir -p "$WORKSPACE/.rpmbuild/BUILD" \
+         "$WORKSPACE/.rpmbuild/RPMS" \
+         "$WORKSPACE/.rpmbuild/SOURCES" \
+         "$WORKSPACE/.rpmbuild/SPECS" \
+         "$WORKSPACE/.rpmbuild/SRPMS"
 
                     cp lab4-rpm/SPECS/count-files.spec \
                        "$WORKSPACE/.rpmbuild/SPECS/"
