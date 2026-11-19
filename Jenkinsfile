@@ -38,6 +38,8 @@ pipeline {
                 sh 'shellcheck count_files.sh'
             }
         }
+        stage('Build Packages') {
+            parallel {
 
         stage('Build RPM') {
             agent {
@@ -89,6 +91,8 @@ pipeline {
                 stash name: 'deb-package', includes: '*.deb'
             }
         }
+    }
+ }
         stage('Test RPM Installation') {
             agent {
                 docker {
