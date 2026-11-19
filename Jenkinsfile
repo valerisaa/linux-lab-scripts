@@ -140,6 +140,27 @@ pipeline {
                                  fingerprint: true
             }
         }
+        stage('Publish Packages') {
+            agent {
+                label 'built-in'
+            }
+            steps {
+                unstash 'rpm-package'
+                unstash 'deb-package'
+
+                withCredentials([string(credentialsId: 'github-token', variable: 'GH_TOKEN')]) {
+                    sh '''
+                        gh release create "lab8-build-${BUILD_NUMBER}" \
+                            count-files-2.0-1.noarch.rpm \
+                            count-files_1.0-1_all.deb \
+                            --repo valerisaa/linux-lab-scripts \
+                            --target main \
+                            --title "Lab 8 Build ${BUILD_NUMBER}" \
+                            --notes "RPM and DEB packages built by Jenkins Pipeline."
+                    '''
+                }
+            }
+        }
     }
 
         post {
