@@ -142,13 +142,21 @@ pipeline {
         }
     }
 
-    post {
+        post {
         success {
             echo 'Build completed successfully!'
+
+            mail to: 'v.a.temchur@gmail.com',
+                 subject: "Jenkins: ${env.JOB_NAME} - SUCCESS",
+                 body: "Pipeline completed successfully!\nBuild: ${env.BUILD_URL}"
         }
 
         failure {
             echo 'Build failed!'
+
+            mail to: 'v.a.temchur@gmail.com',
+                 subject: "Jenkins: ${env.JOB_NAME} - FAILURE",
+                 body: "Pipeline failed!\nBuild: ${env.BUILD_URL}"
         }
     }
 }
