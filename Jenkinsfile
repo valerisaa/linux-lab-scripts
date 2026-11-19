@@ -29,6 +29,15 @@ pipeline {
                 sh 'bash count_files.sh'
             }
         }
+        stage('ShellCheck') {
+            agent {
+                label 'agent-1'
+            }
+            steps {
+                unstash 'source'
+                sh 'shellcheck count_files.sh'
+            }
+        }
 
         stage('Build RPM') {
             agent {
